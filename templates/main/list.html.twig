@@ -1,0 +1,26 @@
+{% block list %}
+    <h1>All Pastes</h1>
+
+    <ul>
+        {% for paste in pastes %}
+            <li>
+                <a href="{{ path('app_paste_show', { uuid: paste.uuid }) }}">{{ paste.name }}</a>
+                <small>{{ paste.createdAt|date('Y-m-d H:i') }}</small>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <div class="pagination">
+        {% if currentPage > 1 %}
+            <a href="{{ path('app_main', { page: currentPage - 1 }) }}">Previous</a>
+        {% endif %}
+
+        <span>Page {{ currentPage }} of {{ totalPages }}</span>
+
+        {% if currentPage < totalPages %}
+            <a href="{{ path('app_main', { page: currentPage + 1 }) }}">Next</a>
+        {% endif %}
+    </div>
+
+
+{% endblock %}

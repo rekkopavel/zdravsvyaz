@@ -3,34 +3,43 @@
 namespace App\Entity;
 
 use App\Repository\PasteRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PasteRepository::class)]
 class Paste
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private string $uuid;
 
-    #[ORM\ManyToOne(targetEntity: Member::class)]
-    #[ORM\JoinColumn('member_id', referencedColumnName: 'id')]
-    private Member $member;
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\Column]
+    private int $access = 1;
+
+    #[ORM\Column(type: 'datetime',  options: ['default' => NULL])]
+    private \DateTimeInterface $expired;
+
     #[ORM\Column(length: 1000)]
     private ?string $content = null;
 
-    public function getId(): ?int
+    #[ORM\Column(length: 10)]
+    private ?string $lang = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTime $createdAt = null;
+
+    public function getUuid(): string
     {
-        return $this->id;
+        return $this->uuid;
     }
 
-    public function setId(string $id): static
+    public function setId(string $uuid): static
     {
-        $this->id = $id;
+        $this->uuid = $uuid;
 
         return $this;
     }
@@ -55,6 +64,54 @@ class Paste
     public function setContent(string $content): static
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function getAccess(): ?string
+    {
+        return $this->content;
+    }
+
+    public function setAccess(string $content): static
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    public function getExpired(): ?string
+    {
+        return $this->content;
+    }
+
+    public function setExpired(string $content): static
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    public function getLang(): ?string
+    {
+        return $this->content;
+    }
+
+    public function setLang(string $content): static
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTime
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTime $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

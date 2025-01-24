@@ -5,38 +5,25 @@ namespace App\Repository;
 use App\Entity\Paste;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * @extends ServiceEntityRepository<Paste>
  */
 class PasteRepository extends ServiceEntityRepository
 {
+    private \DateTime $currentDateTime;
+
+    private const  PUBLIC_ACCESS = 1;
+    private const UNLISTED_ACCESS = 0;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Paste::class);
+
+        $this->currentDateTime = new \DateTime();
     }
 
-
-    public function findById(int $id):Paste
-    {
-
-        $qb = $this->createQueryBuilder('p')
-            ->where('p.id > :id')
-            ->setParameter('id', $id)
-            ->orderBy('p.id', 'ASC');
-
-
-        $query = $qb->getQuery();
-        $paste = $query->setMaxResults(1)->getOneOrNullResult();
-        return $query->execute();
-
-
-
-    }
-
-    /**
-     * Добавление сущности в базу данных.
-     */
     public function save(Paste $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -45,40 +32,46 @@ class PasteRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
-    /**
-     * Удаление сущности из базы данных.
-     */
-    public function remove(Paste $entity, bool $flush = false): void
+    public function findByUuidNotExpired(string $uuid): ?Paste
     {
-        $this->getEntityManager()->remove($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.expired IS NULL OR p.expired > :currentDateTime')
+            ->setParameter('currentDateTime', $this->currentDateTime)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
-    //    /**
-    //     * @return Paste[] Returns an array of Paste objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
 
-    //    public function findOneBySomeField($value): ?Paste
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+
+    public function findLatestPublicNotExpired(int $limit): array
+    {
+
+
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.expired IS NULL OR p.expired > :currentDateTime')
+            ->andWhere('p.access = :access')
+            ->setParameter('currentDateTime', $this->currentDateTime)
+            ->setParameter('access', self::PUBLIC_ACCESS)
+            ->orderBy('p.createdAt', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+
+    public function findAllWithPaginationPublicNotExpired(int $page, int $limit = 10): Paginator
+    {
+        $query = $this->createQueryBuilder('p')
+            ->andWhere('p.expired IS NULL OR p.expired > :currentDateTime')
+            ->andWhere('p.access = :access')
+            ->setParameter('currentDateTime', $this->currentDateTime)
+            ->setParameter('access', self::PUBLIC_ACCESS)
+            ->orderBy('p.createdAt', 'DESC') // Сортировка по дате создания
+            ->setFirstResult(($page - 1) * $limit) // Пропуск записей для пагинации
+            ->setMaxResults($limit) // Лимит записей на страницу
+            ->getQuery();
+
+        return new Paginator($query); // Возвращаем объект Paginator
+    }
+
+
 }

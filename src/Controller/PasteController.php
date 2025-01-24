@@ -34,24 +34,18 @@ final class PasteController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_paste_show', methods: ['GET'])]
-    public function show(Paste $paste): Response
+    #[Route('/{uuid}', name: 'app_paste_show', methods: ['GET'])]
+    public function show(PasteRepository $pasteRepository, $uuid): Response
     {
+        $paste = $pasteRepository->findByUuidNotExpired($uuid);
+
+        if (!$paste) {
+            throw $this->createNotFoundException('Paste not found');
+        }
         return $this->render('paste/show.html.twig', [
             'paste' => $paste,
         ]);
     }
 
 
-
-    #[Route('/{id}', name: 'app_paste_delete', methods: ['POST'])]
-    public function delete(Request $request, Paste $paste, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$paste->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($paste);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('app_paste_index', [], Response::HTTP_SEE_OTHER);
-    }
 }

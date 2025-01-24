@@ -1,0 +1,14 @@
+{% block latest %}
+    <h1>The Latest Pastes</h1>
+
+    <ul>
+        {% for paste in latest_pastes %}
+            <li>
+                <a href="{{ path('app_paste_show', { uuid: paste.uuid }) }}">{{ paste.name }}</a>
+                <small>{{ paste.createdAt|date('Y-m-d H:i') }}</small>
+            </li>
+        {% endfor %}
+    </ul>
+
+
+{% endblock %}

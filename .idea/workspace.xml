@@ -5,13 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6f30ee2e-24c1-4699-84dc-8f34115ae9df" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/main/form.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/main/latest.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/main/list.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5528f284-2e8d-485a-adb0-f2dc60c7a89e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/5528f284-2e8d-485a-adb0-f2dc60c7a89e.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5528f284-2e8d-485a-adb0-f2dc60c7a89e/storage_v2/_src_/database/app.IXoBAA/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/5528f284-2e8d-485a-adb0-f2dc60c7a89e/storage_v2/_src_/database/app.IXoBAA/schema/public.abK9xQ.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/twig.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/twig.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20250122114511.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/MainController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MainController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/PasteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PasteController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Member.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Paste.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Paste.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/MemberRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/PasteRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/PasteRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/main/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/main/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/paste/index.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/paste/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/paste/show.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -300,6 +311,11 @@
     ]
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/templates/main" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="phpunit.xml.dist" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner scope="XML" />
@@ -321,7 +337,9 @@
       <workItem from="1737459891961" duration="6378000" />
       <workItem from="1737470732711" duration="1613000" />
       <workItem from="1737545948200" duration="9181000" />
-      <workItem from="1737629653778" duration="18745000" />
+      <workItem from="1737629653778" duration="19945000" />
+      <workItem from="1737718527113" duration="75000" />
+      <workItem from="1737718628339" duration="16499000" />
     </task>
     <servers />
   </component>

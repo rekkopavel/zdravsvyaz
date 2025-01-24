@@ -3,17 +3,9 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.48">
     <root id="1">
       <DateStyle>mdy</DateStyle>
-      <Grants>1||-9223372036854775808|c|G
-1||10|c|G
-1||10|C|G
-1||10|T|G
-4||-9223372036854775808|c|G
-4||10|c|G
-4||10|C|G
-4||10|T|G</Grants>
-      <IntrospectionStateNumber>747</IntrospectionStateNumber>
+      <IntrospectionStateNumber>779</IntrospectionStateNumber>
       <ServerVersion>16.6</ServerVersion>
-      <StartupTime>1737637435</StartupTime>
+      <StartupTime>1737720617</StartupTime>
       <TimeZones>true ACDT
 true ACSST
 false ACST
@@ -809,7 +801,7 @@ false posixrules
 13255||10|C|G
 13255||-9223372036854775808|U|G
 13255||10|U|G</Grants>
-      <IntrospectionStateNumber>747</IntrospectionStateNumber>
+      <IntrospectionStateNumber>779</IntrospectionStateNumber>
       <ObjectId>16384</ObjectId>
       <OwnerName>app</OwnerName>
     </database>
@@ -4233,66 +4225,44 @@ false posixrules
     <schema id="264" parent="2" name="public">
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <IntrospectionStateNumber>747</IntrospectionStateNumber>
+      <IntrospectionStateNumber>779</IntrospectionStateNumber>
       <ObjectId>2200</ObjectId>
       <StateNumber>524</StateNumber>
       <OwnerName>pg_database_owner</OwnerName>
     </schema>
-    <sequence id="265" parent="264" name="members_id_seq">
-      <DasType>integer|0s</DasType>
-      <ObjectId>16391</ObjectId>
-      <SequenceIdentity>1(1)</SequenceIdentity>
-      <StartValue>1</StartValue>
-      <StateNumber>734</StateNumber>
-      <OwnerName>app</OwnerName>
-    </sequence>
-    <sequence id="266" parent="264" name="paste_id_seq">
-      <DasType>integer|0s</DasType>
-      <ObjectId>16401</ObjectId>
-      <SequenceIdentity>1(1)</SequenceIdentity>
-      <StartValue>1</StartValue>
-      <StateNumber>734</StateNumber>
-      <OwnerName>app</OwnerName>
-    </sequence>
-    <table id="267" parent="264" name="doctrine_migration_versions">
+    <table id="265" parent="264" name="doctrine_migration_versions">
       <ObjectId>16385</ObjectId>
       <StateNumber>732</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>app</OwnerName>
     </table>
-    <table id="268" parent="264" name="members">
-      <ObjectId>16392</ObjectId>
-      <StateNumber>734</StateNumber>
+    <table id="266" parent="264" name="paste">
+      <ObjectId>16422</ObjectId>
+      <StateNumber>778</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>app</OwnerName>
     </table>
-    <table id="269" parent="264" name="paste">
-      <ObjectId>16402</ObjectId>
-      <StateNumber>734</StateNumber>
-      <AccessMethodId>2</AccessMethodId>
-      <OwnerName>app</OwnerName>
-    </table>
-    <column id="270" parent="267" name="version">
+    <column id="267" parent="265" name="version">
       <DasType>varchar(191)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>732</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="271" parent="267" name="executed_at">
+    <column id="268" parent="265" name="executed_at">
       <DasType>timestamp(0)|0s</DasType>
       <DefaultExpression>NULL::timestamp without time zone</DefaultExpression>
       <Position>2</Position>
       <StateNumber>732</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="272" parent="267" name="execution_time">
+    <column id="269" parent="265" name="execution_time">
       <DasType>integer|0s</DasType>
       <Position>3</Position>
       <StateNumber>732</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <index id="273" parent="267" name="doctrine_migration_versions_pkey">
+    <index id="270" parent="265" name="doctrine_migration_versions_pkey">
       <ColNames>version</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16389</ObjectId>
@@ -4304,143 +4274,74 @@ false posixrules
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <key id="274" parent="267" name="doctrine_migration_versions_pkey">
+    <key id="271" parent="265" name="doctrine_migration_versions_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16390</ObjectId>
       <Primary>1</Primary>
       <StateNumber>732</StateNumber>
       <UnderlyingIndexId>16389</UnderlyingIndexId>
     </key>
-    <column id="275" parent="268" name="id">
-      <DasType>integer|0s</DasType>
-      <DefaultExpression>nextval(&apos;members_id_seq&apos;::regclass)</DefaultExpression>
+    <column id="272" parent="266" name="uuid">
+      <DasType>varchar(255)|0s</DasType>
+      <DefaultExpression>gen_random_uuid()</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>734</StateNumber>
-      <SequenceId>16391</SequenceId>
-      <TypeId>23</TypeId>
-    </column>
-    <column id="276" parent="268" name="email">
-      <DasType>varchar(180)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-      <StateNumber>734</StateNumber>
+      <StateNumber>778</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="277" parent="268" name="roles">
-      <DasType>json|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>3</Position>
-      <StateNumber>734</StateNumber>
-      <TypeId>114</TypeId>
-    </column>
-    <column id="278" parent="268" name="password">
+    <column id="273" parent="266" name="name">
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
-      <Position>4</Position>
-      <StateNumber>734</StateNumber>
+      <Position>2</Position>
+      <StateNumber>778</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="279" parent="268" name="created_at">
+    <column id="274" parent="266" name="access">
+      <DasType>integer|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StateNumber>778</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="275" parent="266" name="expired">
       <DasType>timestamp(0)|0s</DasType>
       <NotNull>1</NotNull>
-      <Position>5</Position>
-      <StateNumber>734</StateNumber>
+      <Position>4</Position>
+      <StateNumber>778</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="280" parent="268" name="is_active">
-      <DasType>boolean|0s</DasType>
+    <column id="276" parent="266" name="content">
+      <DasType>varchar(1000)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StateNumber>778</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="277" parent="266" name="lang">
+      <DasType>varchar(10)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>6</Position>
-      <StateNumber>734</StateNumber>
-      <TypeId>16</TypeId>
+      <StateNumber>778</StateNumber>
+      <TypeId>1043</TypeId>
     </column>
-    <index id="281" parent="268" name="members_pkey">
-      <ColNames>id</ColNames>
+    <index id="278" parent="266" name="paste_pkey">
+      <ColNames>uuid</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16398</ObjectId>
+      <ObjectId>16428</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>734</StateNumber>
-      <Unique>1</Unique>
-      <AccessMethodId>403</AccessMethodId>
-    </index>
-    <index id="282" parent="268" name="uniq_45a0d2ffe7927c74">
-      <ColNames>email</ColNames>
-      <ObjectId>16400</ObjectId>
-      <StateNumber>734</StateNumber>
+      <StateNumber>778</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
       <CollationNames>default</CollationNames>
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <key id="283" parent="268" name="members_pkey">
+    <key id="279" parent="266" name="paste_pkey">
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16399</ObjectId>
+      <ObjectId>16429</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>734</StateNumber>
-      <UnderlyingIndexId>16398</UnderlyingIndexId>
-    </key>
-    <column id="284" parent="269" name="id">
-      <DasType>integer|0s</DasType>
-      <DefaultExpression>nextval(&apos;paste_id_seq&apos;::regclass)</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-      <StateNumber>734</StateNumber>
-      <SequenceId>16401</SequenceId>
-      <TypeId>23</TypeId>
-    </column>
-    <column id="285" parent="269" name="member_id">
-      <DasType>integer|0s</DasType>
-      <Position>2</Position>
-      <StateNumber>734</StateNumber>
-      <TypeId>23</TypeId>
-    </column>
-    <column id="286" parent="269" name="name">
-      <DasType>varchar(255)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>3</Position>
-      <StateNumber>734</StateNumber>
-      <TypeId>1043</TypeId>
-    </column>
-    <column id="287" parent="269" name="content">
-      <DasType>varchar(1000)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>4</Position>
-      <StateNumber>734</StateNumber>
-      <TypeId>1043</TypeId>
-    </column>
-    <foreign-key id="288" parent="269" name="fk_9c5678987597d3fe">
-      <ColNames>member_id</ColNames>
-      <ObjectId>16411</ObjectId>
-      <RefColNames>id</RefColNames>
-      <RefColPositions>1</RefColPositions>
-      <StateNumber>734</StateNumber>
-      <RefTableId>16392</RefTableId>
-      <RefTableName>members</RefTableName>
-      <RefTableKind>table</RefTableKind>
-    </foreign-key>
-    <index id="289" parent="269" name="paste_pkey">
-      <ColNames>id</ColNames>
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16408</ObjectId>
-      <Primary>1</Primary>
-      <StateNumber>734</StateNumber>
-      <Unique>1</Unique>
-      <AccessMethodId>403</AccessMethodId>
-    </index>
-    <index id="290" parent="269" name="idx_9c5678987597d3fe">
-      <ColNames>member_id</ColNames>
-      <ObjectId>16410</ObjectId>
-      <StateNumber>734</StateNumber>
-      <AccessMethodId>403</AccessMethodId>
-    </index>
-    <key id="291" parent="269" name="paste_pkey">
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16409</ObjectId>
-      <Primary>1</Primary>
-      <StateNumber>734</StateNumber>
-      <UnderlyingIndexId>16408</UnderlyingIndexId>
+      <StateNumber>778</StateNumber>
+      <UnderlyingIndexId>16428</UnderlyingIndexId>
     </key>
   </database-model>
 </dataSource>

@@ -3,8 +3,9 @@
 {% block title %}Pastes main page{% endblock %}
 
 {% block body %}
-<style>
-</style>
-Hello
-    {{ form(form) }}
+
+    {% include 'main/list.html.twig' %}
+    {% include 'main/latest.html.twig' %}
+    {% include 'main/form.html.twig' %}
+
 {% endblock %}
