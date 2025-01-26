@@ -7,6 +7,7 @@
 Заходим  в папку с проектом и поднимаем контейнеры
 
   docker compose build --no-cache
+  
   docker compose up --pull always -d --wait
 
 Сайт должен быть доступен по адресу:
@@ -29,5 +30,7 @@
 Доступ к базе если нужен
 
 DATABASE_URL="postgresql://app:app@127.0.0.1:15432/app?serverVersion=16&charset=utf8"
+
 POSTGRES_PASSWORD=app
+
 POSTGRES_USER=app
