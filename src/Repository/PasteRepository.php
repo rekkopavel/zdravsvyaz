@@ -36,7 +36,9 @@ class PasteRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.expired IS NULL OR p.expired > :currentDateTime')
+            ->andWhere('p.uuid = :uuid')
             ->setParameter('currentDateTime', $this->currentDateTime)
+            ->setParameter('uuid', $uuid)
             ->getQuery()
             ->getOneOrNullResult();
     }

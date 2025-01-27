@@ -5,13 +5,14 @@ namespace App\Entity;
 use App\Repository\PasteRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
 
 #[ORM\Entity(repositoryClass: PasteRepository::class)]
 class Paste
 {
     #[ORM\Id]
-    #[ORM\Column]
-    private string $uuid;
+    #[ORM\Column(type: "uuid",)]
+    private ?string $uuid = null;
 
 
     #[ORM\Column(length: 255)]
@@ -20,7 +21,7 @@ class Paste
     #[ORM\Column]
     private int $access = 1;
 
-    #[ORM\Column(type: 'datetime',  options: ['default' => NULL])]
+    #[ORM\Column(type: 'datetime', options: ['default' => NULL])]
     private \DateTimeInterface $expired;
 
     #[ORM\Column(length: 1000)]
@@ -32,12 +33,17 @@ class Paste
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTime $createdAt = null;
 
+    public function __construct()
+    {
+        $this->uuid = Uuid::uuid4();
+    }
+
     public function getUuid(): string
     {
         return $this->uuid;
     }
 
-    public function setId(string $uuid): static
+    public function setUuid(string $uuid): static
     {
         $this->uuid = $uuid;
 

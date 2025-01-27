@@ -7,7 +7,7 @@ document.querySelector('form[name="paste"]').addEventListener('submit', async fu
 
   try {
     // Отправляем запрос
-    const response = await fetch('http://localhost/save', {
+    const response = await fetch('https://localhost:4443/paste/save', {
       method: 'POST',
       body: formData,
       headers: {
