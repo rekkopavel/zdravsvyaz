@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/paste')]
 final class PasteController extends AbstractController
 {
-    #[Route('/new', name: 'app_paste_new', methods: ['GET', 'POST'])]
+    #[Route('/save', name: 'save_paste', methods: [ 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $paste = new Paste();

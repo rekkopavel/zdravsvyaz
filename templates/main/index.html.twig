@@ -4,8 +4,9 @@
 
 {% block body %}
 
-    {% include 'main/list.html.twig' %}
-    {% include 'main/latest.html.twig' %}
-    {% include 'main/form.html.twig' %}
+    {{ include('main/form.html.twig') }}
+    {{ include('main/list.html.twig') }}
+    {{ include('main/latest.html.twig') }}
+
 
 {% endblock %}
