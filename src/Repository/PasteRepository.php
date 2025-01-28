@@ -35,7 +35,7 @@ class PasteRepository extends ServiceEntityRepository
     public function findByUuidNotExpired(string $uuid): ?Paste
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.expired IS NULL OR p.expired > :currentDateTime')
+            ->andWhere('p.expiration IS NULL OR p.expiration > :currentDateTime')
             ->andWhere('p.uuid = :uuid')
             ->setParameter('currentDateTime', $this->currentDateTime)
             ->setParameter('uuid', $uuid)
@@ -49,7 +49,7 @@ class PasteRepository extends ServiceEntityRepository
 
 
         return $this->createQueryBuilder('p')
-            ->andWhere('p.expired IS NULL OR p.expired > :currentDateTime')
+            ->andWhere('p.expiration IS NULL OR p.expiration > :currentDateTime')
             ->andWhere('p.access = :access')
             ->setParameter('currentDateTime', $this->currentDateTime)
             ->setParameter('access', self::PUBLIC_ACCESS)
@@ -63,7 +63,7 @@ class PasteRepository extends ServiceEntityRepository
     public function findAllWithPaginationPublicNotExpired(int $page, int $limit = 10): Paginator
     {
         $query = $this->createQueryBuilder('p')
-            ->andWhere('p.expired IS NULL OR p.expired > :currentDateTime')
+            ->andWhere('p.expiration IS NULL OR p.expiration > :currentDateTime')
             ->andWhere('p.access = :access')
             ->setParameter('currentDateTime', $this->currentDateTime)
             ->setParameter('access', self::PUBLIC_ACCESS)

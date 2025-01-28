@@ -5,23 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6f30ee2e-24c1-4699-84dc-8f34115ae9df" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/5528f284-2e8d-485a-adb0-f2dc60c7a89e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/5528f284-2e8d-485a-adb0-f2dc60c7a89e.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/5528f284-2e8d-485a-adb0-f2dc60c7a89e/storage_v2/_src_/database/app.IXoBAA/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/5528f284-2e8d-485a-adb0-f2dc60c7a89e/storage_v2/_src_/database/app.IXoBAA/schema/public.abK9xQ.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/doctrine.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/doctrine.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20250124131210.php" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/Version20250124131210.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20250124180102.php" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/Version20250124180102.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/MainController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MainController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/PasteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PasteController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Paste.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Paste.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Form/PasteType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/PasteType.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Repository/PasteRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/PasteRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/main/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/main/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -348,7 +339,7 @@
       <workItem from="1737877617127" duration="185000" />
       <workItem from="1737892791415" duration="8537000" />
       <workItem from="1737974413308" duration="974000" />
-      <workItem from="1737975512429" duration="15360000" />
+      <workItem from="1737975512429" duration="20707000" />
     </task>
     <servers />
   </component>

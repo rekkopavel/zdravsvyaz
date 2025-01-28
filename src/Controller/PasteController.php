@@ -24,7 +24,9 @@ final class PasteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $paste = $form->getData();
+
+            $expirationChoice = $form->get('expiration')->getData();
+            $this->handleExpiration($paste, $expirationChoice);
             $entityManager->persist($paste);
             $entityManager->flush();
             return new JsonResponse([
@@ -53,4 +55,24 @@ final class PasteController extends AbstractController
     }
 
 
+    private function handleExpiration(Paste $paste, ?string $expirationChoice): void
+    {
+        if (!$expirationChoice) {
+            $paste->setExpiration(null);
+            return;
+        }
+
+        $modifiers = [
+            '1 hour' => '+1 hour',
+            '1 day' => '+1 day',
+            '1 week' => '+1 week',
+            '1 month' => '+1 month'
+        ];
+
+        if (isset($modifiers[$expirationChoice])) {
+            $paste->setExpiration(
+                (new \DateTime())->modify($modifiers[$expirationChoice])
+            );
+        }
+    }
 }

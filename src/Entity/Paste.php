@@ -21,11 +21,11 @@ class Paste
     #[ORM\Column]
     private int $access = 1;
 
-    #[ORM\Column(type: 'datetime', options: ['default' => NULL])]
-    private \DateTimeInterface $expired;
-
     #[ORM\Column(length: 1000)]
     private ?string $content = null;
+
+    #[ORM\Column(type: 'datetime', options: ['default' => NULL])]
+    private ?\DateTimeInterface $expiration;
 
     #[ORM\Column(length: 10)]
     private ?string $lang = null;
@@ -36,6 +36,7 @@ class Paste
     public function __construct()
     {
         $this->uuid = Uuid::uuid4();
+        $this->createdAt = new \DateTime();
     }
 
     public function getUuid(): string
@@ -43,7 +44,7 @@ class Paste
         return $this->uuid;
     }
 
-    public function setUuid(string $uuid): static
+    public function setUuid(string $uuid): self
     {
         $this->uuid = $uuid;
 
@@ -55,7 +56,7 @@ class Paste
         return $this->name;
     }
 
-    public function setName(string $name): static
+    public function setName(string $name): self
     {
         $this->name = $name;
 
@@ -67,45 +68,44 @@ class Paste
         return $this->content;
     }
 
-    public function setContent(string $content): static
+    public function setContent(string $content): self
     {
         $this->content = $content;
 
         return $this;
     }
 
-    public function getAccess(): ?string
+    public function getAccess(): int
     {
-        return $this->content;
+        return $this->access;
     }
 
-    public function setAccess(string $content): static
+    public function setAccess(int $access): self
     {
-        $this->content = $content;
+        $this->access = $access;
 
         return $this;
     }
 
-    public function getExpired(): ?string
+    public function getExpiration(): ?\DateTimeInterface
     {
-        return $this->content;
+        return $this->expiration;
     }
 
-    public function setExpired(string $content): static
+    public function setExpiration(?\DateTimeInterface $expiration): self
     {
-        $this->content = $content;
-
+        $this->expiration = $expiration;
         return $this;
     }
 
     public function getLang(): ?string
     {
-        return $this->content;
+        return $this->lang;
     }
 
-    public function setLang(string $content): static
+    public function setLang(string $lang): self
     {
-        $this->content = $content;
+        $this->lang = $lang;
 
         return $this;
     }
