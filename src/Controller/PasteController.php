@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Paste;
+use App\Responses;
 use App\Form\PasteType;
 use App\Repository\PasteRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -11,51 +12,52 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/paste')]
 final class PasteController extends AbstractController
 {
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly PasteRepository $pasteRepository,
+        private readonly Responses\PasteResponse $pasteResponse
+    ) {}
+
     #[Route('/save', name: 'save_paste', methods: ['POST'])]
-    public function save(Request $request, EntityManagerInterface $entityManager): JsonResponse
+    public function save(Request $request): JsonResponse
     {
         $paste = new Paste();
         $form = $this->createForm(PasteType::class, $paste);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $expirationChoice = $form->get('expiration')->getData();
-            $this->handleExpiration($paste, $expirationChoice);
-            $entityManager->persist($paste);
-            $entityManager->flush();
-            return new JsonResponse([
-                'status' => 'success',
-                'message' => 'Данные успешно сохранены!'
-            ], 200);
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return $this->pasteResponse->createErrorResponse('Ошибка при сохранении данных.');
         }
 
-        return new JsonResponse([
-            'status' => 'error',
-            'message' => 'Ошибка при сохранении данных.'
-        ], 400);
+        $expirationChoice = $form->get('expiration')->getData();
+        $this->setExpiration($paste, $expirationChoice);
+
+        $this->entityManager->persist($paste);
+        $this->entityManager->flush();
+
+        return $this->pasteResponse->createSuccessResponse('Данные успешно сохранены!');
     }
 
     #[Route('/{uuid}', name: 'paste_show', methods: ['GET'])]
-    public function show(PasteRepository $pasteRepository, $uuid): Response
+    public function show(string $uuid): Response
     {
-        $paste = $pasteRepository->findByUuidNotExpired($uuid);
+        $paste = $this->pasteRepository->findByUuidNotExpired($uuid);
 
         if (!$paste) {
             throw $this->createNotFoundException('Paste not found');
         }
+
         return $this->render('paste/show.html.twig', [
             'paste' => $paste,
         ]);
     }
 
-
-    private function handleExpiration(Paste $paste, ?string $expirationChoice): void
+    private function setExpiration(Paste $paste, ?string $expirationChoice): void
     {
         if (!$expirationChoice) {
             $paste->setExpiration(null);
@@ -69,10 +71,12 @@ final class PasteController extends AbstractController
             '1 month' => '+1 month'
         ];
 
-        if (isset($modifiers[$expirationChoice])) {
+        if (array_key_exists($expirationChoice, $modifiers)) {
             $paste->setExpiration(
                 (new \DateTime())->modify($modifiers[$expirationChoice])
             );
         }
     }
+
+
 }

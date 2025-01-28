@@ -20,8 +20,8 @@ final class MainController extends AbstractController
     {
 
         $page = max(1, (int)$request->query->get('page', 1));
-        $paginator = $pasteRepository->findAllWithPaginationPublicNotExpired($page, self::LIMIT_PASTES_SHOWN);
-        $latest_pastes = $pasteRepository->findLatestPublicNotExpired(self::LIMIT_PASTES_SHOWN);
+        $paginator = $pasteRepository->findPublicPastesPaginated($page, self::LIMIT_PASTES_SHOWN);
+        $latest_pastes = $pasteRepository->findLatestPublicPastes(self::LIMIT_PASTES_SHOWN);
 
         $paste = new Paste();
         $form = $this->createForm(PasteType::class, $paste);

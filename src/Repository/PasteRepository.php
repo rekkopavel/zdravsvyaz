@@ -3,25 +3,25 @@
 namespace App\Repository;
 
 use App\Entity\Paste;
+use App\Enum\PasteAccessType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Query\Parameter;
 
 /**
  * @extends ServiceEntityRepository<Paste>
  */
 class PasteRepository extends ServiceEntityRepository
 {
-    private \DateTime $currentDateTime;
-
-    private const  PUBLIC_ACCESS = 1;
-    private const UNLISTED_ACCESS = 0;
+    private const DEFAULT_PAGE_SIZE = 10;
+    private const MAX_PAGE_SIZE = 100;
 
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Paste::class);
-
-        $this->currentDateTime = new \DateTime();
     }
 
     public function save(Paste $entity, bool $flush = false): void
@@ -32,48 +32,78 @@ class PasteRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
     public function findByUuidNotExpired(string $uuid): ?Paste
     {
+        $currentDateTime = new \DateTime();
+
+        $parameters = new ArrayCollection([
+            new Parameter('currentDateTime', $currentDateTime),
+            new Parameter('uuid', $uuid)
+        ]);
+
         return $this->createQueryBuilder('p')
-            ->andWhere('p.expiration IS NULL OR p.expiration > :currentDateTime')
+            ->where('p.expiration IS NULL OR p.expiration > :currentDateTime')
             ->andWhere('p.uuid = :uuid')
-            ->setParameter('currentDateTime', $this->currentDateTime)
-            ->setParameter('uuid', $uuid)
+            ->setParameters($parameters)
             ->getQuery()
             ->getOneOrNullResult();
     }
 
-
-    public function findLatestPublicNotExpired(int $limit): array
+    public function findLatestPublicPastes(int $limit = 10): array
     {
+        $this->validateLimit($limit);
 
-
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.expiration IS NULL OR p.expiration > :currentDateTime')
-            ->andWhere('p.access = :access')
-            ->setParameter('currentDateTime', $this->currentDateTime)
-            ->setParameter('access', self::PUBLIC_ACCESS)
-            ->orderBy('p.createdAt', 'DESC')
+        return $this->buildPublicPastesQueryBuilder()
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
     }
 
-
-    public function findAllWithPaginationPublicNotExpired(int $page, int $limit = 10): Paginator
+    public function findPublicPastesPaginated(int $page = 1, int $limit = self::DEFAULT_PAGE_SIZE): Paginator
     {
-        $query = $this->createQueryBuilder('p')
-            ->andWhere('p.expiration IS NULL OR p.expiration > :currentDateTime')
-            ->andWhere('p.access = :access')
-            ->setParameter('currentDateTime', $this->currentDateTime)
-            ->setParameter('access', self::PUBLIC_ACCESS)
-            ->orderBy('p.createdAt', 'DESC') // Сортировка по дате создания
-            ->setFirstResult(($page - 1) * $limit) // Пропуск записей для пагинации
-            ->setMaxResults($limit) // Лимит записей на страницу
-            ->getQuery();
+        $this->validatePaginationParameters($page, $limit);
 
-        return new Paginator($query); // Возвращаем объект Paginator
+        $queryBuilder = $this->buildPublicPastesQueryBuilder()
+            ->setFirstResult(($page - 1) * $limit)
+            ->setMaxResults($limit);
+
+        return new Paginator($queryBuilder);
     }
 
 
+
+    private function buildPublicPastesQueryBuilder():QueryBuilder
+    {
+        $currentDateTime = new \DateTime();
+
+        $parameters = new ArrayCollection([
+            new Parameter('currentDateTime', $currentDateTime),
+            new Parameter('access', PasteAccessType::PUBLIC->value)
+        ]);
+
+        return $this->createQueryBuilder('p')
+            ->where('p.expiration IS NULL OR p.expiration > :currentDateTime')
+            ->andWhere('p.access = :access')
+            ->setParameters($parameters)
+            ->orderBy('p.createdAt', 'DESC');
+    }
+
+    private function validateLimit(int $limit): void
+    {
+        if ($limit < 1 || $limit > self::MAX_PAGE_SIZE) {
+            throw new \InvalidArgumentException(
+                sprintf('Limit must be between 1 and %d', self::MAX_PAGE_SIZE)
+            );
+        }
+    }
+
+    private function validatePaginationParameters(int $page, int $limit): void
+    {
+        if ($page < 1) {
+            throw new \InvalidArgumentException('Page number must be greater than 0');
+        }
+
+        $this->validateLimit($limit);
+    }
 }

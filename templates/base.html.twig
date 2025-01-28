@@ -10,7 +10,31 @@
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
           crossorigin="anonymous">
 
-    {% block stylesheets %}{% endblock %}
+    {% block stylesheets %}
+        <style>
+        .notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 25px;
+        border-radius: 5px;
+        color: white;
+        z-index: 1000;
+        }
+
+        .notification-success {
+        background: #28a745;
+        }
+
+        .notification-error {
+        background: #dc3545;
+        }
+
+        .notification-info {
+        background: #17a2b8;
+        }
+        </style>
+    {% endblock %}
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
