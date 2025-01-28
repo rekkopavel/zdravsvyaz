@@ -41,7 +41,7 @@ final class PasteController extends AbstractController
         ], 400);
     }
 
-    #[Route('/{uuid}', name: 'app_paste_show', methods: ['GET'])]
+    #[Route('/{uuid}', name: 'paste_show', methods: ['GET'])]
     public function show(PasteRepository $pasteRepository, $uuid): Response
     {
         $paste = $pasteRepository->findByUuidNotExpired($uuid);

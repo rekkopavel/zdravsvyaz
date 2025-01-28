@@ -3,24 +3,30 @@
 {% block title %}Paste{% endblock %}
 
 {% block body %}
-    <h1>Paste</h1>
+    <div class="container">
+        <h1>{{ paste.name }}</h1>
+        <div class="meta">
+            <span class="language">{{ paste.lang ?? 'plaintext' }}</span>
+            <span class="expiration">
+                {% if paste.expiration %}
+                    Expires: {{ paste.expiration|date('Y-m-d H:i') }}
+                {% else %}
+                    No expiration
+                {% endif %}
+            </span>
+        </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ paste.uuid }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ paste.name }}</td>
-            </tr>
-            <tr>
-                <th>Content</th>
-                <td>{{ paste.content }}</td>
-            </tr>
-        </tbody>
-    </table>
+        <pre><code class="language-{{ paste.lang ?? 'plaintext' }}">{{ paste.content }}</code></pre>
+
+        <div class="url">
+            Paste URL: {{ url('paste_show', {uuid: paste.uuid}) }}
+        </div>
+    </div>
+
+    {% if paste.lang %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
+    {% endif %}
 
     <a href="{{ path('app_main') }}">back to list</a>
 {% endblock %}
